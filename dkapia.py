@@ -132,7 +132,8 @@ def get_parametrics_cache_file_name():
 	@return: Full path to the parametrics cache file
 	"""
 
-	return os.path.join(os.path.expanduser("~"), PARAMETRICS_FILE)
+	#return os.path.join(os.path.expanduser("~"), PARAMETRICS_FILE)
+	return os.path.join(os.getcwd(), PARAMETRICS_FILE)
 
 def save_parametrics_cache():
 	"""
