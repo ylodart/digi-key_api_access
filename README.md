@@ -1,5 +1,5 @@
 # digi-key_api_access
-Implements Digi-Key API access using plain Python 2.7 with no external dependencies.  Human interface is via command line.
+Implements Digi-Key API access using plain Python 3.6.4 with no external dependencies.  Human interface is via command line.
 
 ## Motivation
 I was cleaning up the KiCad BOM for a project and wanted to:
