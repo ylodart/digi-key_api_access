@@ -344,15 +344,20 @@ def invoke_auth_magic_one():
 
 	r = https_session.post(SSO_HOST + html_parser.form_action, data={"pf.username": GLOBAL_CONTEXT[CK_LOGIN_NAME], "pf.pass":GLOBAL_CONTEXT[CK_LOGIN_PASSWORD], "pf.ok":"clicked"}, allow_redirects=False)
 
+	# If user has not approved this app already, we will need to do so by sending cSRF token and allow message
+	
 	# get cSRF token
 	login_resp = r.text
 	start = login_resp.find('cSRFToken\" value=\"') + 18
 	end = login_resp.find('\"', start)
 	CSRF_TOKEN = login_resp[start:end]
-	
+		
 	# click ALLOW
-	AUTH_URL = r.url
-	r = https_session.post(AUTH_URL, data={"check-user-approved-scope": "true", "cSRFToken": CSRF_TOKEN, "pf.oauth.authz.consent": "allow"}, allow_redirects=False)
+	if CSRF_TOKEN != "":
+		if DEBUG_FLAG:
+			print("\'Clicking\' ALLOW.")
+		AUTH_URL = r.url
+		r = https_session.post(AUTH_URL, data={"check-user-approved-scope": "true", "cSRFToken": CSRF_TOKEN, "pf.oauth.authz.consent": "allow"}, allow_redirects=False)
 
 	#
 	# XXX I guess here there could be another response.  If the session is expired there might be another clickthrough dialog.
